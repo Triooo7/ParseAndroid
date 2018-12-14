@@ -1,5 +1,6 @@
 package com.compalk.parseapplicationserver;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -43,11 +44,13 @@ public class SignUpLoginActivity extends AppCompatActivity {
                 ParseUser.logInInBackground(edtLoginUsername.getText().toString(), edtLoginPassword.getText().toString(), new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
-                        if (user != null && e == null){
-                            Toast.makeText(SignUpLoginActivity.this," Login Successfully",Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            Toast.makeText(SignUpLoginActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        if (user != null && e == null) {
+                            Toast.makeText(SignUpLoginActivity.this, " Login Successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(SignUpLoginActivity.this, WelcomeActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(SignUpLoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -65,11 +68,13 @@ public class SignUpLoginActivity extends AppCompatActivity {
                 parseUser.signUpInBackground(new SignUpCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e == null){
-                            Toast.makeText(SignUpLoginActivity.this,parseUser.getUsername() + " signed up successfully ",Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            Toast.makeText(SignUpLoginActivity.this,e.getMessage() +"", Toast.LENGTH_LONG).show();
+                        if (e == null) {
+                            Toast.makeText(SignUpLoginActivity.this, parseUser.getUsername() + " signed up successfully ", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(SignUpLoginActivity.this, WelcomeActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(SignUpLoginActivity.this, e.getMessage() + "", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
