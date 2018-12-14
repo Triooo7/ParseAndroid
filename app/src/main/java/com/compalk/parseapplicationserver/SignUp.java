@@ -1,5 +1,6 @@
 package com.compalk.parseapplicationserver;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private TextView txtFromServer;
     private Button btnAllObjects;
     private String getStringFromtheServer;
+    private Button btnTransition;
 
 
     @Override
@@ -40,31 +42,31 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         edtKickPower = findViewById(R.id.edtKickPower);
         txtFromServer = findViewById(R.id.txtFromServer);
         btnAllObjects = findViewById(R.id.btnAllObjects);
+        btnTransition = findViewById(R.id.btnNextActivity);
 
 
         btnAllObjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ParseQuery<ParseObject> queryAll = ParseQuery.getQuery("KickBoxer");
-                queryAll.whereGreaterThanOrEqualTo("punch_speed",100);
+                queryAll.whereGreaterThanOrEqualTo("punch_speed", 100);
                 queryAll.setLimit(1);
                 queryAll.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
                         getStringFromtheServer = "";
-                        if (e == null){
-                            if (objects.size()>0 ){
+                        if (e == null) {
+                            if (objects.size() > 0) {
 
-                                for (ParseObject kickBoxer : objects){
+                                for (ParseObject kickBoxer : objects) {
                                     getStringFromtheServer = getStringFromtheServer + kickBoxer.get("punch_speed") + "\n";
 
                                 }
 
 
-                                Toast.makeText(SignUp.this,getStringFromtheServer ,Toast.LENGTH_LONG).show();
-                            }
-                            else {
-                                Toast.makeText(SignUp.this,e.getMessage()+ "",Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignUp.this, getStringFromtheServer, Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(SignUp.this, e.getMessage() + "", Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -75,8 +77,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         });
 
 
-
-
         txtFromServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +85,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void done(ParseObject object, ParseException e) {
 
-                        if (object != null && e == null){
+                        if (object != null && e == null) {
                             txtFromServer.setText(object.get("kick_speed") + "");
                         }
 
@@ -97,7 +97,20 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
+        btnTransition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SignUp.this,
+                        SignUpLoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
+
 
 
     @Override
